@@ -4,7 +4,7 @@
 
 - Site curto, direto e bonito, com efeitos que demonstrem tecnologia e profissionalismo.
 - Preservar a identidade e o movimento da versão original; retirar conteúdo repetitivo ou sem material real.
-- Conversão principal: conversa no WhatsApp com o Marcos.
+- Conversão principal: conversa no WhatsApp com o Gabriel.
 - Domínio principal: `https://nexiu.dev/`.
 
 ## Estrutura
@@ -41,3 +41,10 @@
 - Cloudflare: registros A `@` e CNAME `www` em **Proxied** (nuvem laranja). Respostas públicas da Cloudflare para home, `www`, sitemap, robots e `llms.txt` conferidas em 08/10/2026.
 - Google Search Console: propriedade `nexiu.dev` verificada e `https://nexiu.dev/sitemap.xml` enviado em 08/10/2026. O relatório inicial mostrou "Não foi possível ler o sitemap" e 0 páginas; o arquivo público respondeu 200 pela Cloudflare e passou em validação XML com 5 URLs. Acompanhar o processamento no Search Console e usar "Testar URL publicada" se o erro persistir.
 - Desempenho real e indexação dependem de dados após a publicação; não há garantia de posição no Google ou de citação por assistentes de IA.
+
+
+## Atualização de contato — 18/11/2026
+
+- Gabriel confirmou que é o responsável pelo atendimento e autorizou a troca das referências ao Marcos.
+- WhatsApp confirmado: +55 12 99781-6761 (5512997816761). Troca na home, páginas de serviço, mensagem inicial, dados estruturados e llms.txt.
+- Ajuste pontual: preservar direção visual, serviços e portfólio. Verificar build e todos os destinos de WhatsApp antes e depois de publicar. Release anterior preservada para reversão.

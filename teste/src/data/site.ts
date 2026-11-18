@@ -1,5 +1,5 @@
-export const WHATSAPP_NUMBER = '5512988565492';
-export const WHATSAPP_MESSAGE = 'Olá, Marcos! Vim pelo site da NexIU e quero conversar sobre um projeto para minha empresa.';
+export const WHATSAPP_NUMBER = '5512997816761';
+export const WHATSAPP_MESSAGE = 'Olá, Gabriel! Vim pelo site da NexIU e quero conversar sobre um projeto para minha empresa.';
 export const WHATSAPP_URL = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(WHATSAPP_MESSAGE)}`;
 
 export const nav = [
@@ -66,7 +66,7 @@ export const services = [
 ] as const;
 
 export const steps = [
-  { title: 'Você conta a ideia.', text: 'Manda uma referência ou mostra a tarefa que quer resolver. O Marcos conversa com você.' },
+  { title: 'Você conta a ideia.', text: 'Manda uma referência ou mostra a tarefa que quer resolver. O Gabriel conversa com você.' },
   { title: 'A gente constrói.', text: 'Você recebe a proposta com valor e prazo, vê o visual e acompanha o desenvolvimento.' },
   { title: 'Testa. Ajusta. Publica.', text: 'Conferimos tudo com você antes de colocar o projeto em uso.' },
 ] as const;
