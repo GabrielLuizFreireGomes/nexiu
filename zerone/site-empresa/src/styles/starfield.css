@@ -1,0 +1,117 @@
+/*
+ * Fundo estrelado do site. Cada estrela é um gradiente radial minúsculo; elas
+ * se repetem em três camadas com ladrilhos de tamanhos diferentes, para a
+ * repetição não ficar perceptível. Uma camada adicional tem parallax sutil.
+ *
+ * Para mudar a densidade, altere os tamanhos dos ladrilhos (--stars-*): quanto
+ * maior o ladrilho, mais espaçadas as estrelas. A importação fica no layout Astro.
+ */
+
+body {
+  --stars-far: 290px 330px;
+  --stars-mid: 430px 510px;
+  --stars-near: 710px 630px;
+
+  background-image:
+    /* Distantes: pequenas e apagadas */
+    radial-gradient(circle at 37px 52px, var(--star-dim) 0.7px, transparent 1.3px),
+    radial-gradient(circle at 181px 23px, var(--star-dim) 0.7px, transparent 1.3px),
+    radial-gradient(circle at 243px 187px, var(--star-dim) 0.7px, transparent 1.3px),
+    radial-gradient(circle at 96px 271px, var(--star-dim) 0.7px, transparent 1.3px),
+    /* Intermediárias */
+    radial-gradient(circle at 61px 133px, var(--star) 0.9px, transparent 1.6px),
+    radial-gradient(circle at 322px 71px, var(--star) 0.9px, transparent 1.6px),
+    radial-gradient(circle at 208px 348px, var(--star) 0.9px, transparent 1.6px),
+    radial-gradient(circle at 391px 462px, var(--star) 0.9px, transparent 1.6px),
+    /* Próximas: raras, um pouco maiores e com um leve tom de azul ou roxo */
+    radial-gradient(circle at 128px 96px, var(--star-blue) 1.1px, transparent 2px),
+    radial-gradient(circle at 547px 211px, var(--star-purple) 1.1px, transparent 2px),
+    radial-gradient(circle at 303px 452px, var(--star) 1.1px, transparent 2px),
+    radial-gradient(circle at 654px 573px, var(--star-blue) 1.1px, transparent 2px);
+  background-size:
+    var(--stars-far),
+    var(--stars-far),
+    var(--stars-far),
+    var(--stars-far),
+    var(--stars-mid),
+    var(--stars-mid),
+    var(--stars-mid),
+    var(--stars-mid),
+    var(--stars-near),
+    var(--stars-near),
+    var(--stars-near),
+    var(--stars-near);
+}
+
+/* Uma camada fixa independente move por transform (composição), sem repintar
+   o fundo inteiro em cada frame da rolagem. */
+.space-parallax {
+  position: fixed;
+  z-index: 0;
+  inset: -240px 0;
+  pointer-events: none;
+  opacity: 0.3;
+  background-image:
+    radial-gradient(circle at 48px 76px, var(--star) 1px, transparent 1.8px),
+    radial-gradient(circle at 218px 152px, var(--star-blue) 1.2px, transparent 2px),
+    radial-gradient(circle at 134px 274px, var(--star-dim) 0.8px, transparent 1.5px),
+    radial-gradient(circle at 295px 38px, var(--star-purple) 1px, transparent 1.8px);
+  background-size: 340px 320px;
+  transform: translate3d(0, var(--space-parallax-y, 0px), 0);
+  will-change: transform, opacity;
+  animation:
+    stars-far-twinkle 11s ease-in-out infinite,
+    stars-far-drift 34s ease-in-out infinite;
+}
+
+/* Estrelas próximas percorrem uma distância maior na primeira transição. */
+.space-parallax-near {
+  position: fixed;
+  z-index: 0;
+  inset: -240px 0;
+  pointer-events: none;
+  opacity: 0.34;
+  background-image:
+    radial-gradient(circle at 89px 67px, var(--star-blue) 1.5px, transparent 2.6px),
+    radial-gradient(circle at 327px 241px, var(--star-purple) 1.3px, transparent 2.4px),
+    radial-gradient(circle at 171px 401px, var(--star) 1.1px, transparent 2px);
+  background-size: 590px 520px;
+  transform: translate3d(0, var(--space-near-y, 0px), 0);
+  will-change: transform, opacity;
+  animation:
+    stars-near-twinkle 7.5s ease-in-out infinite,
+    stars-near-drift 27s ease-in-out infinite;
+}
+
+@keyframes stars-far-twinkle {
+  0%, 100% { opacity: 0.3; }
+  42% { opacity: 0.18; }
+  76% { opacity: 0.37; }
+}
+
+@keyframes stars-near-twinkle {
+  0%, 100% { opacity: 0.34; }
+  32% { opacity: 0.42; }
+  68% { opacity: 0.22; }
+}
+
+@keyframes stars-far-drift {
+  0%, 100% { translate: 0 0; }
+  50% { translate: 4px -6px; }
+}
+
+@keyframes stars-near-drift {
+  0%, 100% { translate: 0 0; }
+  50% { translate: -7px 5px; }
+}
+
+html[data-motion='reduced'] .space-parallax,
+html[data-motion='reduced'] .space-parallax-near {
+  animation: none;
+  translate: none;
+}
+
+.site-shell {
+  position: relative;
+  z-index: 1;
+}

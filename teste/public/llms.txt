@@ -1,0 +1,17 @@
+# NexIU
+
+> A NexIU cria sites, landing pages, automações, sistemas e integrações sob medida para empresas no Brasil. O atendimento é direto com quem planeja e desenvolve os projetos.
+
+## Páginas oficiais
+
+- [Página inicial](https://nexiu.dev/): visão geral da NexIU, serviços, modo de trabalho e contato.
+- [Sites institucionais](https://nexiu.dev/criacao-de-sites/): criação de sites para apresentar empresas e seus serviços.
+- [Landing pages](https://nexiu.dev/landing-pages/): páginas para campanhas, ofertas e serviços específicos.
+- [Automações](https://nexiu.dev/automacoes/): fluxos para reduzir tarefas manuais e conectar ferramentas.
+- [Sistemas e integrações](https://nexiu.dev/sistemas-e-integracoes/): painéis, sistemas sob medida e conexão entre ferramentas.
+
+## Contato
+
+- WhatsApp: +55 12 98856-5492
+- Idioma: português do Brasil
+- Atendimento: remoto, em todo o Brasil

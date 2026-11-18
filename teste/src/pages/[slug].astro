@@ -1,0 +1,85 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Logo from '../components/Logo.astro';
+import Button from '../components/Button.astro';
+import { WHATSAPP_URL, services } from '../data/site';
+import { servicePages } from '../data/service-pages';
+
+export function getStaticPaths() {
+  return servicePages.map((page) => ({ params: { slug: page.slug }, props: { page } }));
+}
+
+const { page } = Astro.props;
+const year = new Date().getFullYear();
+---
+
+<Layout title={page.title} description={page.description} serviceName={page.eyebrow}>
+  <a class="skip-link" href="#conteudo">Pular para o conteúdo</a>
+  <header class="detail-header">
+    <div class="container detail-header__inner">
+      <a href="/" aria-label="NexIU — início"><Logo /></a>
+      <nav aria-label="Navegação principal"><a href="/#servicos">Serviços</a><a href="/#processo">Processo</a></nav>
+      <Button href={WHATSAPP_URL} label="Falar conosco" tone="outline" variant="roll" external />
+    </div>
+  </header>
+
+  <main id="conteudo">
+    <section class="detail-hero">
+      <div class="container">
+        <a href="/#servicos" class="detail-back">← Voltar aos serviços</a>
+        <span class="kicker">NexIU / {page.eyebrow}</span>
+        <h1>{page.heading}</h1>
+        <div class="detail-hero__bottom">
+          <p>{page.lead}</p>
+          <Button href={WHATSAPP_URL} label="Pedir orçamento" tone="red" external />
+        </div>
+      </div>
+    </section>
+
+    <section class="detail-content section" aria-labelledby="detail-title">
+      <div class="container detail-content__grid">
+        <div>
+          <span class="kicker">O que entregamos</span>
+          <h2 id="detail-title">{page.sectionTitle}</h2>
+        </div>
+        <div class="detail-content__body">
+          {page.paragraphs.map((paragraph) => <p>{paragraph}</p>)}
+          <ul class="detail-points">
+            {page.points.map((point, index) => <li><span>0{index + 1}</span>{point}</li>)}
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <nav class="detail-related section" aria-label="Outros serviços">
+      <div class="container">
+        <span class="kicker">Continue explorando</span>
+        <h2>Outras soluções</h2>
+        <div class="detail-related__list">
+          {services.filter((service) => !service.href.includes(page.slug)).map((service) => (
+            <a href={service.href}><span>{service.title}</span><span aria-hidden="true">↗</span></a>
+          ))}
+        </div>
+      </div>
+    </nav>
+
+    <section class="cta cta--detail" aria-labelledby="contact-title">
+      <div class="container">
+        <p class="cta__kicker">Seu projeto pode começar agora.</p>
+        <h2 id="contact-title" class="cta__title">Vamos <span class="red">conversar.</span></h2>
+        <div class="cta__actions">
+          <Button href={WHATSAPP_URL} label="Chamar o Marcos no WhatsApp" tone="red" icon="whatsapp" external />
+          <span class="cta__hint">Quem responde é quem desenvolve.</span>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="detail-footer">
+    <div class="container detail-footer__inner">
+      <a href="/" aria-label="NexIU — início"><Logo /></a>
+      <p>Sites e automações feitos à mão para empresas em todo o Brasil.</p>
+      <span>© {year} NexIU</span>
+    </div>
+  </footer>
+</Layout>

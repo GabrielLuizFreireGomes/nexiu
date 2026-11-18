@@ -1,0 +1,152 @@
+/* Card aberto, direto sobre o fundo: a imagem é o elemento principal e o
+   texto se organiza por linhas finas, sem moldura nem painel. */
+.card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.meta {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-3);
+  padding-block: var(--space-3);
+  border-top: 1px solid var(--border-strong);
+  color: var(--text-muted);
+  font-size: var(--fs-xs);
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.number {
+  color: var(--blue-light);
+  font-family: var(--font-heading);
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+
+.metaEnd {
+  display: flex;
+  gap: var(--space-3);
+  margin-left: auto;
+  font-variant-numeric: tabular-nums;
+}
+
+.featured {
+  color: var(--blue-light);
+}
+
+.media {
+  overflow: hidden;
+  border-radius: var(--radius-sm);
+}
+
+/* O zoom acontece dentro do recorte de .media. */
+.media > * {
+  transition: transform 700ms var(--ease);
+}
+
+.title {
+  margin-top: var(--space-4);
+  font-size: clamp(1.5rem, 1.2rem + 1vw, 2rem);
+  font-weight: 700;
+  letter-spacing: -0.03em;
+}
+
+.titleButton {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--space-4);
+  width: 100%;
+  font-family: inherit;
+  font-weight: inherit;
+  letter-spacing: inherit;
+  line-height: inherit;
+  text-align: left;
+}
+
+.titleText {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+/* A área clicável do título cobre o card todo. */
+.titleButton::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: var(--radius-sm);
+}
+
+/* O anel de foco contorna o card inteiro, não só o título. */
+.titleButton:focus-visible {
+  outline: none;
+}
+
+.titleButton:focus-visible::after {
+  outline: 2px solid var(--blue-light);
+  outline-offset: 6px;
+}
+
+.arrow {
+  flex-shrink: 0;
+  width: 1.75rem;
+  height: 1.75rem;
+  margin-top: 0.1em;
+  color: var(--blue-light);
+  transition: transform var(--duration-slow) var(--ease);
+}
+
+.description {
+  display: -webkit-box;
+  margin-top: var(--space-2);
+  overflow: hidden;
+  color: var(--text-muted);
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+}
+
+.tech {
+  margin-top: auto;
+  padding-top: var(--space-4);
+  color: var(--text-muted);
+  font-size: var(--fs-sm);
+}
+
+/* Separa a descrição das tecnologias sem fechar o card numa caixa. */
+.tech::before {
+  content: '';
+  display: block;
+  margin-bottom: var(--space-3);
+  border-top: 1px solid var(--border);
+}
+
+/* Hover e foco: zoom sutil na imagem e a seta avança na diagonal. */
+@media (hover: hover) {
+  .card:hover .media > * {
+    transform: scale(1.04);
+  }
+
+  .card:hover .arrow {
+    transform: translate(3px, -3px);
+  }
+}
+
+.card:focus-within .media > * {
+  transform: scale(1.04);
+}
+
+.card:focus-within .arrow {
+  transform: translate(3px, -3px);
+}
+
+html[data-motion='reduced'] .card:hover .media > *,
+html[data-motion='reduced'] .card:focus-within .media > *,
+html[data-motion='reduced'] .card:hover .arrow,
+html[data-motion='reduced'] .card:focus-within .arrow {
+  transform: none;
+}

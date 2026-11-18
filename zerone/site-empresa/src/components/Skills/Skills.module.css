@@ -1,0 +1,67 @@
+/* Colunas abertas, como as de um índice: sem caixas, separadas por linhas
+   finas (horizontais no celular, verticais a partir do tablet). */
+.columns {
+  display: grid;
+  border-bottom: 1px solid var(--border);
+}
+
+.column {
+  display: flex;
+  flex-direction: column;
+  padding-block: var(--space-6);
+  border-top: 1px solid var(--border);
+}
+
+.title {
+  margin-bottom: var(--space-5);
+  font-size: var(--fs-xl);
+  font-weight: 700;
+  letter-spacing: -0.03em;
+}
+
+.item {
+  padding-block: var(--space-3);
+  border-top: 1px solid var(--border);
+  color: var(--text);
+  font-family: var(--font-heading);
+  font-size: var(--fs-md);
+  font-weight: 500;
+}
+
+@media (max-width: 47.99rem) {
+  .column {
+    padding-block: var(--space-4);
+  }
+
+  .title {
+    margin-bottom: var(--space-4);
+  }
+
+  .item {
+    padding-block: var(--space-2);
+  }
+}
+
+@media (min-width: 48rem) {
+  .columns {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    border-top: 1px solid var(--border);
+  }
+
+  .column {
+    padding: var(--space-6) var(--space-6) var(--space-7);
+    border-top: 0;
+  }
+
+  .column:first-child {
+    padding-left: 0;
+  }
+
+  .column:last-child {
+    padding-right: 0;
+  }
+
+  .column + .column {
+    border-left: 1px solid var(--border);
+  }
+}

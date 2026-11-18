@@ -1,0 +1,29 @@
+.avatar {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 1;
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-lg);
+  background-color: var(--surface);
+  object-fit: cover;
+}
+
+.initials {
+  display: grid;
+  place-items: center;
+  background-image:
+    radial-gradient(circle at 0% 0%, var(--blue-soft), transparent 70%),
+    radial-gradient(circle at 100% 100%, var(--purple-soft), transparent 70%);
+  color: var(--text);
+  font-family: var(--font-heading);
+  font-size: 2.5rem;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+}
+
+@media (min-width: 64rem) {
+  .initials {
+    font-size: 5rem;
+  }
+}

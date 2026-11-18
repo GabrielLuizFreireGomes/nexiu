@@ -1,0 +1,82 @@
+.grid {
+  display: grid;
+  gap: var(--space-5);
+}
+
+.cardWrapper {
+  height: 100%;
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  height: 100%;
+  margin: 0;
+  padding: var(--space-5);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-card);
+  background-color: var(--surface);
+}
+
+.mark {
+  width: 1.75rem;
+  height: 1.75rem;
+  color: var(--purple);
+}
+
+.quote {
+  flex-grow: 1;
+  margin: 0;
+  color: var(--text);
+  font-size: var(--fs-md);
+}
+
+.author {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  padding-top: var(--space-4);
+  border-top: 1px solid var(--border);
+}
+
+.name {
+  font-family: var(--font-heading);
+  font-weight: 600;
+}
+
+.role {
+  color: var(--text-muted);
+  font-size: var(--fs-sm);
+}
+
+@media (max-width: 47.99rem) {
+  .grid {
+    gap: var(--space-3);
+  }
+
+  .card {
+    gap: var(--space-3);
+    padding: var(--space-4);
+  }
+
+  .author {
+    padding-top: var(--space-3);
+  }
+}
+
+@media (min-width: 48rem) {
+  .grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 64rem) {
+  .grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .card {
+    padding: var(--space-6);
+  }
+}

@@ -1,0 +1,75 @@
+.panel {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: 46rem;
+  margin-inline: auto;
+  padding: var(--space-7) var(--space-5);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  background-color: var(--surface);
+  text-align: center;
+}
+
+/* O SectionTitle já traz margem inferior; aqui o painel controla o ritmo. */
+.panel > :first-child {
+  margin-bottom: var(--space-6);
+}
+
+.actions {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  width: 100%;
+  max-width: 20rem;
+}
+
+.email {
+  max-width: 100%;
+  margin-top: var(--space-2);
+  padding-block: var(--space-2);
+  color: var(--text-muted);
+  font-size: var(--fs-sm);
+  overflow-wrap: anywhere;
+  text-decoration: underline;
+  text-decoration-color: var(--border-strong);
+  text-underline-offset: 0.25em;
+  transition: color var(--duration) var(--ease);
+}
+
+.email:hover {
+  color: var(--text);
+}
+
+.socials {
+  justify-content: center;
+  margin-top: var(--space-6);
+}
+
+@media (max-width: 47.99rem) {
+  .panel {
+    padding: var(--space-5) var(--space-4);
+  }
+
+  .panel > :first-child {
+    margin-bottom: var(--space-4);
+  }
+
+  .socials {
+    margin-top: var(--space-4);
+  }
+}
+
+@media (min-width: 30rem) {
+  .actions {
+    flex-flow: row wrap;
+    justify-content: center;
+    max-width: none;
+  }
+}
+
+@media (min-width: 48rem) {
+  .panel {
+    padding: var(--space-8) var(--space-7);
+  }
+}

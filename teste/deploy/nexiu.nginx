@@ -1,0 +1,62 @@
+server {
+    listen 80;
+    listen [::]:80;
+    server_name nexiu.dev www.nexiu.dev;
+
+    root /var/www/nexiu/current;
+
+    location ^~ /.well-known/acme-challenge/ {
+        try_files $uri =404;
+    }
+
+    location / {
+        return 301 https://nexiu.dev$request_uri;
+    }
+}
+
+server {
+    listen 443 ssl http2;
+    listen [::]:443 ssl http2;
+    server_name nexiu.dev;
+
+    ssl_certificate /etc/letsencrypt/live/nexiu.dev/fullchain.pem;
+    ssl_certificate_key /etc/letsencrypt/live/nexiu.dev/privkey.pem;
+    include /etc/letsencrypt/options-ssl-nginx.conf;
+    ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem;
+
+    root /var/www/nexiu/current;
+    index index.html;
+
+    add_header X-Content-Type-Options nosniff always;
+    add_header Referrer-Policy strict-origin-when-cross-origin always;
+
+    location = /projetos/daniela-moraes {
+        return 301 https://daniela.nexiu.dev/;
+    }
+
+    location ^~ /projetos/daniela-moraes/ {
+        return 301 https://daniela.nexiu.dev/;
+    }
+
+    location / {
+        try_files $uri $uri/ =404;
+    }
+
+    location ^~ /_astro/ {
+        add_header Cache-Control "public, max-age=31536000, immutable";
+        try_files $uri =404;
+    }
+}
+
+server {
+    listen 443 ssl http2;
+    listen [::]:443 ssl http2;
+    server_name www.nexiu.dev;
+
+    ssl_certificate /etc/letsencrypt/live/nexiu.dev/fullchain.pem;
+    ssl_certificate_key /etc/letsencrypt/live/nexiu.dev/privkey.pem;
+    include /etc/letsencrypt/options-ssl-nginx.conf;
+    ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem;
+
+    return 301 https://nexiu.dev$request_uri;
+}

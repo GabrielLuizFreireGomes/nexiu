@@ -1,0 +1,99 @@
+:root {
+  color-scheme: dark;
+
+  /* Superfícies */
+  --bg: #07080f;
+  --bg-elevated: #0d0f1a;
+  --surface: #12152a;
+  --surface-hover: #181c36;
+  --border: rgba(148, 163, 255, 0.12);
+  --border-strong: rgba(148, 163, 255, 0.26);
+  --header-bg: rgba(7, 8, 15, 0.72);
+  --overlay: rgba(3, 4, 9, 0.78);
+
+  /* Texto */
+  --text: #e8eaf6;
+  --text-muted: #8d93b5;
+  --text-on-accent: #ffffff;
+
+  /* Destaques */
+  --blue: #4f7cff;
+  --purple: #8b5cf6;
+  /* Tom claro para texto pequeno em destaque (contraste AA sobre as superfícies). */
+  --blue-light: #93abff;
+  /* Tons mais fechados para fundos com texto branco (contraste AA). */
+  --blue-strong: #3d63e0;
+  --purple-strong: #7446e0;
+  --blue-soft: rgba(79, 124, 255, 0.14);
+  --purple-soft: rgba(139, 92, 246, 0.14);
+  --gradient-accent: linear-gradient(135deg, var(--blue), var(--purple));
+  --gradient-accent-strong: linear-gradient(135deg, var(--blue-strong), var(--purple-strong));
+  /* Fundo estrelado (veja starfield.css). As opacidades ficam abaixo do
+     brilho do texto secundário, para uma estrela atrás de um parágrafo não
+     ser confundida com pontuação. */
+  --star-dim: rgba(232, 234, 246, 0.3);
+  --star: rgba(232, 234, 246, 0.5);
+  --star-blue: rgba(147, 171, 255, 0.7);
+  --star-purple: rgba(180, 156, 255, 0.68);
+
+  /* Quebra sutil entre seções: linha fina que some em direção às bordas. */
+  --divider-soft: linear-gradient(
+    90deg,
+    transparent,
+    var(--border) 30%,
+    var(--border) 70%,
+    transparent
+  );
+
+  /* Formas usadas apenas em máscaras (a cor não aparece na tela). */
+  --mask-fill: linear-gradient(black, black);
+  --mask-fade: radial-gradient(closest-side, black, transparent);
+  --mask-fade-left: linear-gradient(to right, transparent 4%, black 42%);
+
+  /* Tipografia */
+  --font-heading: 'Space Grotesk Variable', 'Space Grotesk', system-ui, sans-serif;
+  --font-body: 'Inter Variable', 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --fs-xs: 0.75rem;
+  --fs-sm: 0.875rem;
+  --fs-base: 1rem;
+  --fs-md: 1.125rem;
+  --fs-lg: clamp(1.25rem, 1.1rem + 0.6vw, 1.5rem);
+  --fs-xl: clamp(1.75rem, 1.4rem + 1.6vw, 2.5rem);
+  --fs-display: clamp(2.75rem, 1.5rem + 6vw, 5.25rem);
+  --leading-tight: 1.1;
+  --leading-normal: 1.65;
+
+  /* Espaçamento */
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.5rem;
+  --space-6: 2rem;
+  --space-7: 3rem;
+  --space-8: 4rem;
+  --section-padding: clamp(1.75rem, 1rem + 2vw, 2.75rem);
+
+  /* Layout */
+  --container: 70rem;
+  --gutter: clamp(1.25rem, 4vw, 2rem);
+  --header-height: 4rem;
+
+  /* Formas e profundidade */
+  --radius-sm: 8px;
+  --radius-card: 12px;
+  --radius-lg: 16px;
+  --radius-pill: 999px;
+  --shadow-card: 0 16px 32px -16px rgba(0, 0, 0, 0.7);
+  --shadow-modal: 0 32px 64px -16px rgba(0, 0, 0, 0.8);
+
+  /* Movimento */
+  --duration-fast: 150ms;
+  --duration: 200ms;
+  --duration-slow: 300ms;
+  --ease: cubic-bezier(0.22, 1, 0.36, 1);
+
+  /* Camadas */
+  --z-header: 50;
+  --z-modal: 100;
+}

@@ -1,0 +1,146 @@
+.hero {
+  position: relative;
+  display: grid;
+  align-items: center;
+  min-height: 100vh;
+  min-height: 100svh;
+  padding-top: calc(var(--header-height) + var(--space-7));
+  padding-bottom: var(--space-8);
+  overflow: hidden;
+  overflow: clip;
+}
+
+.content {
+  position: relative;
+  z-index: 1;
+  opacity: calc(1 - var(--journey-progress, 0) * 0.48);
+  transform: translate3d(0, calc(var(--journey-progress, 0) * -26px), 0);
+}
+
+.hero::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: calc(var(--journey-progress, 0) * 0.55);
+  background: radial-gradient(circle at 72% 50%, rgba(98, 97, 255, 0.16), transparent 48%);
+}
+
+.scrollCue {
+  position: absolute;
+  z-index: 2;
+  right: var(--gutter);
+  bottom: var(--space-6);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-2);
+  color: var(--text-muted);
+  font-size: var(--fs-xs);
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  opacity: calc(1 - var(--journey-progress, 0));
+  transition: color var(--duration) var(--ease);
+}
+
+.scrollCue:hover {
+  color: var(--text);
+}
+
+.scrollCueLine {
+  width: 1px;
+  height: 2rem;
+  background-image: linear-gradient(var(--blue-light), transparent);
+  transform-origin: top;
+  animation: cue-breathe 2s ease-in-out infinite;
+}
+
+@keyframes cue-breathe {
+  50% { transform: scaleY(0.55); opacity: 0.45; }
+}
+
+/* Texto à esquerda; em telas largas a ilustração ocupa o lado direito. */
+.text {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  max-width: 34rem;
+}
+
+.greeting {
+  margin-bottom: var(--space-4);
+  color: var(--blue-light);
+  font-size: var(--fs-sm);
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.name {
+  /* inline-block faz o gradiente cobrir só a largura do texto. */
+  display: inline-block;
+  padding-bottom: 0.08em;
+  background-image: var(--gradient-accent);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  font-size: var(--fs-display);
+  font-weight: 700;
+  letter-spacing: -0.035em;
+  line-height: 1.05;
+  /* Com o texto à esquerda, linhas equilibradas deixariam sobras à direita. */
+  text-wrap: wrap;
+}
+
+.slogan {
+  margin-top: var(--space-4);
+  font-family: var(--font-heading);
+  font-size: var(--fs-lg);
+  font-weight: 500;
+  letter-spacing: -0.01em;
+}
+
+.actions {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  width: 100%;
+  max-width: 20rem;
+  margin-top: var(--space-6);
+}
+
+.socials {
+  margin-top: var(--space-6);
+}
+
+@media (max-width: 47.99rem) {
+  .hero {
+    min-height: 88svh;
+    padding-top: calc(var(--header-height) + var(--space-5));
+    padding-bottom: var(--space-6);
+  }
+
+  .actions,
+  .socials {
+    margin-top: var(--space-5);
+  }
+
+  .scrollCue {
+    display: none;
+  }
+}
+
+@media (min-width: 30rem) {
+  .actions {
+    flex-flow: row wrap;
+    max-width: none;
+  }
+}
+
+@media (forced-colors: active) {
+  .name {
+    background-image: none;
+    color: CanvasText;
+  }
+}

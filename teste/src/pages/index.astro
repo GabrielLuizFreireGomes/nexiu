@@ -1,0 +1,253 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Button from '../components/Button.astro';
+import Logo from '../components/Logo.astro';
+import { WHATSAPP_URL, nav, services, portfolio, steps, faq } from '../data/site';
+
+const marqueeItems = ['Sites', 'Landing pages', 'Automações', 'Sistemas'];
+const year = new Date().getFullYear();
+---
+
+<Layout>
+  <a class="skip-link" href="#conteudo">Pular para o conteúdo</a>
+  <!-- Preloader -->
+  <div class="preloader" aria-hidden="true">
+    <div class="preloader__layer preloader__layer--red"></div>
+    <div class="preloader__layer preloader__layer--dark">
+      <div class="preloader__logo"><Logo /></div>
+    </div>
+  </div>
+
+  <!-- Cursor -->
+  <div class="cursor" aria-hidden="true">
+    <div class="cursor__ring"><span class="cursor__label"></span></div>
+    <div class="cursor__dot"></div>
+  </div>
+
+  <div class="progress" aria-hidden="true"></div>
+
+  <!-- Header -->
+  <header class="header">
+    <a href="#inicio" class="header__logo" aria-label="NexIU — início"><Logo /></a>
+    <div class="header__actions">
+      <Button href={WHATSAPP_URL} label="Fale conosco" variant="roll" tone="outline" external class="header__cta" />
+      <button class="menu-btn" data-menu-toggle aria-expanded="false" aria-controls="menu" data-magnetic="0.35">
+        <span class="menu-btn__text"><span>Menu</span><span>Fechar</span></span>
+        <span class="menu-btn__icon"><i></i><i></i></span>
+      </button>
+    </div>
+  </header>
+
+  <!-- Side menu -->
+  <aside class="menu" id="menu" inert>
+    <div class="menu__overlay" data-menu-close></div>
+    <div class="menu__layer menu__layer--red"></div>
+    <div class="menu__layer menu__layer--ink"></div>
+    <nav class="menu__layer menu__panel" aria-label="Menu principal">
+      <div class="menu__top menu__fade">
+        <Logo class="menu__logo" />
+      </div>
+      <ul class="menu__list">
+        {nav.map((item, i) => (
+          <li>
+            <a class="menu__link" href={item.href}>
+              <span class="menu__link-inner">
+                <span class="menu__num">{String(i + 1).padStart(2, '0')}</span>
+                <span class="menu__roll" data-text={item.label}><span>{item.label}</span></span>
+              </span>
+            </a>
+          </li>
+        ))}
+      </ul>
+      <div class="menu__bottom">
+        <div class="menu__fade">
+          <span class="menu__small">Fale direto com o Marcos</span>
+          <a href={WHATSAPP_URL} target="_blank" rel="noopener" class="menu__contact">+55 12 98856-5492</a>
+        </div>
+        <div class="menu__fade">
+          <Button href={WHATSAPP_URL} label="Chamar no WhatsApp" tone="red" icon="whatsapp" external />
+        </div>
+      </div>
+    </nav>
+  </aside>
+
+  <main id="conteudo" tabindex="-1">
+    <!-- Hero -->
+    <section class="hero" id="inicio">
+      <div class="container hero__inner">
+        <h1 class="hero__title">
+          <span class="hero__line">Sites e</span>
+          <span class="hero__line">automações</span>
+          <span class="hero__line">feitos <span class="red">à mão.</span></span>
+        </h1>
+        <div class="hero__bottom">
+          <p class="hero__lead" data-fade>
+            Sites para apresentar sua empresa. Páginas para vender uma oferta.
+            Automações para tirar o trabalho repetitivo da rotina.
+          </p>
+          <div class="hero__ctas" data-fade>
+            <Button href={WHATSAPP_URL} label="Pedir orçamento" tone="red" external />
+            <Button href="#servicos" label="Ver serviços" variant="roll" tone="outline" />
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Marquee -->
+    <div class="marquee" aria-hidden="true">
+      <div class="marquee__track">
+        {[0, 1].map(() => (
+          <div class="marquee__group">
+            {marqueeItems.map((m) => (
+              <span class="marquee__item">{m}<i></i></span>
+            ))}
+          </div>
+        ))}
+      </div>
+    </div>
+
+    <!-- Serviços -->
+    <section class="services section" id="servicos">
+      <div class="container">
+        <div class="section__head">
+          <h2 class="title" data-split>O que dá pra criar.</h2>
+        </div>
+        <ul class="services__list">
+          {services.map((s, i) => (
+            <li class="service" data-reveal>
+              <div class="service__link">
+                <span class="service__num">{String(i + 1).padStart(2, '0')}</span>
+                <h3 class="service__title">{s.title}</h3>
+                <span class="service__body">
+                  <span class="service__text">{s.text}</span>
+                </span>
+                <a class="service__arrow" href={`https://wa.me/5512988565492?text=${encodeURIComponent(`Olá, Marcos! Quero conversar sobre ${s.title.toLowerCase()} para minha empresa.`)}`} target="_blank" rel="noopener" aria-label={`Conversar sobre ${s.title.toLowerCase()} no WhatsApp`} data-cursor="WhatsApp">
+                  <svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M21 11.5a8.4 8.4 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.4 8.4 0 0 1-3.8-.9L3 21l1.9-5.7a8.4 8.4 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.4 8.4 0 0 1 3.8-.9h.5a8.5 8.5 0 0 1 8 8v.5Z"/><path d="M8 11h8M8 14h5"/></svg>
+                </a>
+              </div>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </section>
+
+    <!-- Projetos publicados -->
+    <section class="portfolio section" id="portfolio" aria-labelledby="portfolio-title">
+      <div class="container">
+        <div class="portfolio__intro">
+          <div>
+            <p class="portfolio__eyebrow">Projetos publicados</p>
+            <h2 class="title" id="portfolio-title" data-split>Trabalhos no ar.</h2>
+          </div>
+          <p>Da estética automotiva aos espaços de beleza: páginas feitas para apresentar cada negócio do seu jeito. Abra os projetos e veja o trabalho completo.</p>
+        </div>
+        <div class="portfolio__grid">
+          {portfolio.map((project, i) => (
+            <article class="portfolio__item" data-reveal>
+              <a class="portfolio__preview" href={project.url} target="_blank" rel="noopener noreferrer" aria-label={`Abrir o site de ${project.name} em uma nova aba`}>
+                <img src={project.image} alt={`Captura da página inicial de ${project.name}`} width="960" height="633" loading="lazy" decoding="async" />
+                <span class="portfolio__open" aria-hidden="true">↗</span>
+              </a>
+              <div class="portfolio__details">
+                <span class="portfolio__index">{String(i + 1).padStart(2, '0')} / {project.category}</span>
+                <h3>{project.name}</h3>
+                <p>{project.description}</p>
+                <a class="portfolio__link" href={project.url} target="_blank" rel="noopener noreferrer">Visitar site <span aria-hidden="true">↗</span></a>
+              </div>
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- Processo -->
+    <section class="process" id="processo">
+      <div class="process__pin">
+        <div class="container process__head">
+          <h2 class="title" data-split>Da sua ideia ao ar.</h2>
+        </div>
+        <div class="process__track">
+          {steps.map((s, i) => (
+            <article class="step">
+              <span class="step__num">{String(i + 1).padStart(2, '0')}</span>
+              <div>
+                <h3 class="step__title">{s.title}</h3>
+                <p class="step__text">{s.text}</p>
+              </div>
+            </article>
+          ))}
+        </div>
+        <div class="container">
+          <div class="process__bar"><span></span></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="faq section" id="duvidas">
+      <div class="container faq__inner">
+        <div class="section__head">
+          <h2 class="title" data-split>Pode começar assim.</h2>
+        </div>
+        <div class="faq__list">
+          {faq.map((f) => (
+            <div class="faq__item" data-reveal>
+              <h3 class="faq__question">{f.q}</h3>
+              <p class="faq__answer">{f.a}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="cta" id="contato">
+      <div class="container">
+        <p class="cta__kicker" data-reveal>Tem um projeto em mente?</p>
+        <h2 class="cta__title">
+          <a href={WHATSAPP_URL} target="_blank" rel="noopener" class="cta__link" data-cursor="WhatsApp">
+            <span class="cta__line" data-split>Vamos</span>
+            <span class="cta__line red" data-split>conversar</span>
+          </a>
+        </h2>
+        <div class="cta__actions" data-reveal>
+          <Button href={WHATSAPP_URL} label="Chamar o Marcos no WhatsApp" tone="red" icon="whatsapp" external />
+          <span class="cta__hint">Quem responde é quem desenvolve.</span>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer__top">
+        <p class="footer__claim">Você fala com o Marcos. Do primeiro papo à entrega.</p>
+        <ul class="footer__nav">
+          {nav.map((n) => <li><a href={n.href} class="link-line">{n.label}</a></li>)}
+        </ul>
+        <div class="footer__contact">
+          <span>WhatsApp</span>
+          <a href={WHATSAPP_URL} target="_blank" rel="noopener" class="link-line">+55 12 98856-5492</a>
+        </div>
+      </div>
+      <nav class="footer__services" aria-label="Detalhes dos serviços">
+        {services.map((s) => <a href={s.href}>{s.title}</a>)}
+      </nav>
+      <div class="footer__word"><Logo /></div>
+      <div class="footer__bottom">
+        <span>© {year} NexIU</span>
+        <a href="#inicio" class="link-line">Voltar ao topo</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- WhatsApp flutuante -->
+  <a href={WHATSAPP_URL} target="_blank" rel="noopener" class="wa-float" aria-label="Falar no WhatsApp" data-magnetic="0.4">
+    <span class="wa-float__tip">Fale com o Marcos</span>
+    <svg viewBox="0 0 24 24" width="28" height="28" fill="currentColor"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38a9.9 9.9 0 0 0 4.74 1.21c5.46 0 9.91-4.45 9.91-9.91S17.5 2 12.04 2Zm5.8 14.03c-.24.68-1.41 1.3-1.95 1.35-.5.05-.97.23-3.28-.68-2.78-1.1-4.54-3.95-4.68-4.13-.13-.18-1.12-1.49-1.12-2.84s.71-2.02.96-2.29c.25-.27.55-.34.73-.34l.52.01c.17 0 .39-.06.61.47.24.56.79 1.93.86 2.07.07.14.11.3.02.48-.09.18-.14.3-.27.46l-.41.48c-.14.14-.28.29-.12.56.16.27.71 1.17 1.53 1.9 1.05.94 1.94 1.23 2.21 1.37.27.14.43.11.59-.07.16-.18.68-.8.86-1.07.18-.27.36-.23.61-.14.25.09 1.59.75 1.86.89.27.14.45.2.52.32.07.11.07.66-.17 1.33Z"/></svg>
+  </a>
+  <script>
+    import '../scripts/main.ts';
+  </script>
+</Layout>

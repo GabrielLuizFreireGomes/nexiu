@@ -1,0 +1,61 @@
+# Publica na Vercel a cada push na main, usando o token do dono do projeto.
+# Assim o deploy não depende de quem é o autor do commit (a integração Git da
+# Vercel bloqueia autores sem acesso ao projeto).
+#
+# Secrets necessários (Settings → Secrets and variables → Actions):
+#   VERCEL_TOKEN       token criado em vercel.com/account/tokens
+#   VERCEL_ORG_ID      "orgId" do .vercel/project.json (ou Team ID nas configurações)
+#   VERCEL_PROJECT_ID  "projectId" do .vercel/project.json (ou Project ID nas configurações)
+name: Deploy na Vercel
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+concurrency:
+  group: vercel-production
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    env:
+      VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+      VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+      VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+    steps:
+      - name: Confere os secrets
+        id: secrets
+        run: |
+          if [ -z "$VERCEL_TOKEN" ] || [ -z "$VERCEL_ORG_ID" ] || [ -z "$VERCEL_PROJECT_ID" ]; then
+            echo "::warning::Secrets da Vercel não configurados; deploy pulado."
+            echo "ok=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "ok=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - uses: actions/checkout@v4
+        if: steps.secrets.outputs.ok == 'true'
+
+      - uses: actions/setup-node@v4
+        if: steps.secrets.outputs.ok == 'true'
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Instala a CLI da Vercel
+        if: steps.secrets.outputs.ok == 'true'
+        run: npm install --global vercel@latest
+
+      - name: Baixa as configurações do projeto
+        if: steps.secrets.outputs.ok == 'true'
+        run: vercel pull --yes --environment=production --token="$VERCEL_TOKEN"
+
+      - name: Build
+        if: steps.secrets.outputs.ok == 'true'
+        run: vercel build --prod --token="$VERCEL_TOKEN"
+
+      - name: Deploy
+        if: steps.secrets.outputs.ok == 'true'
+        run: vercel deploy --prebuilt --prod --token="$VERCEL_TOKEN"

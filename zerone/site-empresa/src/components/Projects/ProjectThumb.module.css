@@ -1,0 +1,73 @@
+.thumb {
+  container-type: inline-size;
+  aspect-ratio: 16 / 10;
+  overflow: hidden;
+  background-color: var(--bg-elevated);
+}
+
+.image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Largura e altura definidas fazem a proporção valer só como altura mínima. */
+.fill {
+  width: 100%;
+  height: 100%;
+}
+
+.fill .image {
+  object-fit: contain;
+}
+
+.fallback {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: 100%;
+  height: 100%;
+  background-color: var(--bg-elevated);
+  background-image:
+    radial-gradient(90% 120% at 0% 0%, var(--blue-soft), transparent 65%),
+    radial-gradient(90% 120% at 100% 100%, var(--purple-soft), transparent 65%);
+}
+
+.fallback[data-variant='1'] {
+  background-image:
+    radial-gradient(90% 120% at 100% 0%, var(--purple-soft), transparent 65%),
+    radial-gradient(90% 120% at 0% 100%, var(--blue-soft), transparent 65%);
+}
+
+.fallback[data-variant='2'] {
+  background-image:
+    radial-gradient(110% 90% at 50% 0%, var(--blue-soft), transparent 70%),
+    radial-gradient(110% 90% at 50% 100%, var(--purple-soft), transparent 70%);
+}
+
+/* Grade discreta que some em direção às bordas. */
+.fallback::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(var(--border) 1px, transparent 1px),
+    linear-gradient(90deg, var(--border) 1px, transparent 1px);
+  background-position: center;
+  background-size: 2rem 2rem;
+  -webkit-mask-image: var(--mask-fade);
+  mask-image: var(--mask-fade);
+}
+
+/* Marcador provisório até entrar o screenshot: só a inicial, sem moldura. */
+.initial {
+  position: relative;
+  color: var(--text-muted);
+  font-family: var(--font-heading);
+  font-size: 4rem;
+  font-size: clamp(3rem, 22cqi, 8rem);
+  font-weight: 700;
+  letter-spacing: -0.04em;
+  line-height: 1;
+  opacity: 0.6;
+}

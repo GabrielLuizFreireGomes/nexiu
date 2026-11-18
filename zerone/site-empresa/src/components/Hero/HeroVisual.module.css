@@ -1,0 +1,33 @@
+/* No celular a ilustração fica no canto superior direito, atrás do texto e
+   mais apagada, para não disputar atenção com ele. A máscara a faz sumir aos
+   poucos em direção à esquerda, onde está o texto. */
+.visual {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: min(44rem, 165vw);
+  aspect-ratio: 8 / 5;
+  opacity: calc(0.5 - var(--journey-progress, 0) * 0.12);
+  pointer-events: none;
+  transform: translate(-35%, 4%);
+  translate: 0 var(--portal-drift, 0px);
+  scale: var(--portal-scale, 1);
+  -webkit-mask-image: var(--mask-fade-left);
+  mask-image: var(--mask-fade-left);
+}
+
+.canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+/* Em telas largas ela ocupa o lado direito, ao lado do texto. */
+@media (min-width: 64rem) {
+  .visual {
+    top: 50%;
+    width: min(64rem, 80vw);
+    opacity: calc(1 - var(--journey-progress, 0) * 0.3);
+    transform: translate(-22%, -50%);
+  }
+}

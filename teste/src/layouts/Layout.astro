@@ -1,0 +1,99 @@
+---
+import '@fontsource-variable/archivo/wdth.css';
+import '../styles/global.css';
+
+interface Props {
+  title?: string;
+  description?: string;
+  serviceName?: string;
+}
+
+const {
+  title = 'NexIU | Criação de sites, landing pages e automações',
+  description = 'Criação de sites, landing pages, automações e sistemas sob medida para empresas no Brasil. Na NexIU, você fala diretamente com quem planeja e desenvolve.',
+  serviceName,
+} = Astro.props;
+
+const canonical = Astro.site ? new URL(Astro.url.pathname, Astro.site).toString() : undefined;
+const socialImage = Astro.site ? new URL('/social-card.png', Astro.site).toString() : undefined;
+const logoImage = Astro.site ? new URL('/logo-mark-512.png', Astro.site).toString() : undefined;
+const isHome = Astro.url.pathname === '/';
+const structuredData = Astro.site ? {
+  '@context': 'https://schema.org',
+  '@graph': [
+    ...(isHome ? [{
+      '@type': 'WebSite',
+      '@id': `${Astro.site.href}#website`,
+      name: 'NexIU',
+      url: Astro.site.href,
+      inLanguage: 'pt-BR',
+      publisher: { '@id': `${Astro.site.href}#organization` },
+    }, {
+      '@type': 'Organization',
+      '@id': `${Astro.site.href}#organization`,
+      name: 'NexIU',
+      url: Astro.site.href,
+      logo: logoImage,
+      description: 'Criação de sites, landing pages, automações e sistemas sob medida para empresas.',
+      contactPoint: {
+        '@type': 'ContactPoint',
+        telephone: '+55-12-98856-5492',
+        contactType: 'sales',
+        availableLanguage: 'Portuguese',
+      },
+    }] : []),
+    ...(serviceName && canonical ? [{
+      '@type': 'Service',
+      name: serviceName,
+      description,
+      url: canonical,
+      provider: { '@id': `${Astro.site.href}#organization` },
+      areaServed: { '@type': 'Country', name: 'Brasil' },
+    }, {
+      '@type': 'BreadcrumbList',
+      itemListElement: [
+        { '@type': 'ListItem', position: 1, name: 'NexIU', item: Astro.site.href },
+        { '@type': 'ListItem', position: 2, name: serviceName, item: canonical },
+      ],
+    }] : []),
+  ],
+} : undefined;
+---
+
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <meta name="robots" content="index,follow,max-image-preview:large" />
+    <meta name="theme-color" content="#f7f6f2" />
+    {canonical && <link rel="canonical" href={canonical} />}
+    <link rel="icon" type="image/png" sizes="48x48" href="/favicon-48.png" />
+    <link rel="icon" type="image/png" sizes="192x192" href="/favicon-192.png" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="pt_BR" />
+    <meta property="og:site_name" content="NexIU" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    {canonical && <meta property="og:url" content={canonical} />}
+    {socialImage && <meta property="og:image" content={socialImage} />}
+    {socialImage && <meta property="og:image:type" content="image/png" />}
+    {socialImage && <meta property="og:image:alt" content="NexIU — sites, landing pages e automações sob medida" />}
+    {socialImage && <meta property="og:image:width" content="1200" />}
+    {socialImage && <meta property="og:image:height" content="630" />}
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    {socialImage && <meta name="twitter:image" content={socialImage} />}
+    {socialImage && <meta name="twitter:image:alt" content="NexIU — sites, landing pages e automações sob medida" />}
+    {structuredData && <script type="application/ld+json" set:html={JSON.stringify(structuredData)} />}
+    <script is:inline>document.documentElement.classList.add('js');</script>
+  </head>
+  <body>
+    <slot />
+  </body>
+</html>

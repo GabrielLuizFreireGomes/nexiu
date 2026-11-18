@@ -1,0 +1,358 @@
+---
+import '../styles/fonts.css'
+import '../styles/tokens.css'
+import '../styles/global.css'
+import '../styles/starfield.css'
+import '../styles/loader.css'
+import { profile } from '../data/profile.js'
+// Mesmos arquivos do fonts.css: o preload adianta o download das fontes do topo.
+import interLatin from '@fontsource-variable/inter/files/inter-latin-wght-normal.woff2?url'
+import spaceGroteskLatin from '@fontsource-variable/space-grotesk/files/space-grotesk-latin-wght-normal.woff2?url'
+
+const siteUrl = profile.siteUrl.replace(/\/$/, '')
+const pageUrl = `${siteUrl}/`
+const imageUrl = new URL(profile.ogImage, `${siteUrl}/`).href
+const organizationId = `${siteUrl}/#organizacao`
+const contactPoint = { '@type': 'ContactPoint', contactType: 'customer service' }
+if (profile.email) contactPoint.email = profile.email
+if (profile.whatsapp.number) contactPoint.telephone = `+${profile.whatsapp.number}`
+
+const structuredData = JSON.stringify({
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'ProfessionalService',
+      '@id': organizationId,
+      name: profile.name,
+      slogan: profile.slogan,
+      description: profile.tagline,
+      url: pageUrl,
+      image: imageUrl,
+      areaServed: { '@type': 'Country', name: 'Brasil' },
+      knowsLanguage: 'pt-BR',
+      contactPoint,
+      sameAs: profile.socials.map((social) => social.url),
+      hasOfferCatalog: {
+        '@type': 'OfferCatalog',
+        name: 'Serviços',
+        itemListElement: profile.services.map((service) => ({
+          '@type': 'Offer',
+          itemOffered: {
+            '@type': 'Service',
+            name: service.title,
+            description: service.description,
+            provider: { '@id': organizationId },
+          },
+        })),
+      },
+      ...(profile.logo ? { logo: `${siteUrl}${profile.logo}` } : {}),
+    },
+    {
+      '@type': 'WebSite',
+      '@id': `${siteUrl}/#site`,
+      url: pageUrl,
+      name: profile.name,
+      inLanguage: 'pt-BR',
+      publisher: { '@id': organizationId },
+    },
+  ],
+}).replaceAll('<', '\\u003c')
+
+const title = profile.seoTitle
+const description = profile.tagline
+---
+
+<!doctype html>
+<html lang="pt-BR" data-motion="full">
+  <head>
+    <script is:inline>
+      try {
+        document.documentElement.dataset.motion = localStorage.getItem('zeroone-reduced-motion') === 'true'
+          ? 'reduced'
+          : 'full'
+      } catch {
+        document.documentElement.dataset.motion = 'full'
+      }
+      // Com movimento ligado, os blocos com entrada animada começam escondidos
+      // (sem isso eles aparecem, somem e voltam). O timer os mostra se o
+      // script das entradas não rodar.
+      if (document.documentElement.dataset.motion === 'full') {
+        document.documentElement.classList.add('reveal-ready')
+        window.setTimeout(() => {
+          if (!window.__zeroReveal) document.documentElement.classList.remove('reveal-ready')
+        }, 5000)
+      }
+      // Liga a tela de abertura só na primeira página vista na sessão; o timer
+      // garante que ela nunca prenda a página.
+      try {
+        if (!sessionStorage.getItem('zeroone-intro-seen')) {
+          sessionStorage.setItem('zeroone-intro-seen', '1')
+          document.documentElement.classList.add('is-loading')
+        }
+      } catch {
+        document.documentElement.classList.add('is-loading')
+      }
+      window.setTimeout(() => {
+        document.documentElement.classList.remove('is-loading', 'is-launching')
+      }, 4500)
+    </script>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#07080f" />
+    <meta name="color-scheme" content="dark" />
+    <link rel="preload" href={interLatin} as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href={spaceGroteskLatin} as="font" type="font/woff2" crossorigin />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" type="image/png" sizes="48x48" href="/favicon-48.png" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="manifest" href="/site.webmanifest" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <meta name="author" content={profile.name} />
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+    <link rel="canonical" href={pageUrl} />
+    <link rel="alternate" hreflang="pt-BR" href={pageUrl} />
+    <link rel="alternate" hreflang="x-default" href={pageUrl} />
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="pt_BR" />
+    <meta property="og:site_name" content={profile.name} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={pageUrl} />
+    <meta property="og:image" content={imageUrl} />
+    <meta property="og:image:type" content="image/png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content={`${profile.name}: ${profile.slogan}`} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={imageUrl} />
+    <meta name="twitter:image:alt" content={`${profile.name}: ${profile.slogan}`} />
+    <script type="application/ld+json" set:html={structuredData}></script>
+  </head>
+  <body>
+    <div class="space-loader" aria-hidden="true">
+      <canvas></canvas>
+      <div class="space-loader-core">
+        <p class="space-loader-name">{profile.name}</p>
+        <div class="space-loader-bar"></div>
+      </div>
+    </div>
+    <script is:inline>
+      (() => {
+        const root = document.documentElement
+        const loader = document.querySelector('.space-loader')
+        if (!root.classList.contains('is-loading')) {
+          loader.remove()
+          return
+        }
+        const canvas = loader.querySelector('canvas')
+        const context = canvas.getContext('2d')
+        const reduced = root.dataset.motion === 'reduced'
+        const startedAt = performance.now()
+        const MIN_MS = reduced ? 200 : 650
+        const stars = []
+        let width = 0
+        let height = 0
+        let speed = 0.6
+        let targetSpeed = 1.6
+        let running = true
+
+        // A página não rola por baixo enquanto a abertura está na tela. (Não dá
+        // para usar overflow: hidden no html: o Lenis entende como rolagem travada.)
+        const block = (event) => {
+          event.preventDefault()
+          event.stopPropagation()
+        }
+        loader.addEventListener('wheel', block, { passive: false })
+        loader.addEventListener('touchmove', block, { passive: false })
+
+        const resize = () => {
+          const ratio = Math.min(window.devicePixelRatio || 1, 2)
+          width = window.innerWidth
+          height = window.innerHeight
+          canvas.width = width * ratio
+          canvas.height = height * ratio
+          context.setTransform(ratio, 0, 0, ratio, 0, 0)
+        }
+        const spawn = (star, far) => {
+          star.x = (Math.random() - 0.5) * width
+          star.y = (Math.random() - 0.5) * height
+          star.z = far ? width : Math.random() * width
+          star.pz = star.z
+          star.hue = Math.random() < 0.3 ? '147, 171, 255' : Math.random() < 0.5 ? '180, 156, 255' : '232, 234, 246'
+          return star
+        }
+
+        resize()
+        for (let i = 0; i < (width < 700 ? 140 : 260); i += 1) stars.push(spawn({}, false))
+
+        // Estrelas vindo na direção de quem olha, como numa viagem em dobra.
+        const draw = () => {
+          if (!running) return
+          speed += (targetSpeed - speed) * 0.04
+          context.clearRect(0, 0, width, height)
+          const cx = width / 2
+          const cy = height / 2
+          for (const star of stars) {
+            star.pz = star.z
+            star.z -= speed * 6
+            if (star.z < 1) { spawn(star, true); continue }
+            const k = 128 / star.z
+            const pk = 128 / star.pz
+            const x = cx + star.x * k
+            const y = cy + star.y * k
+            const px = cx + star.x * pk
+            const py = cy + star.y * pk
+            if (x < -50 || x > width + 50 || y < -50 || y > height + 50) { spawn(star, true); continue }
+            const alpha = Math.min(1, (1 - star.z / width) * 1.4)
+            context.strokeStyle = `rgba(${star.hue}, ${alpha})`
+            context.lineWidth = Math.max(0.5, (1 - star.z / width) * 2)
+            context.beginPath()
+            context.moveTo(px, py)
+            context.lineTo(x, y)
+            context.stroke()
+          }
+          requestAnimationFrame(draw)
+        }
+        if (!reduced) {
+          window.addEventListener('resize', resize)
+          requestAnimationFrame(draw)
+        }
+
+        let progress = 0.08
+        const setProgress = (value) => {
+          progress = Math.max(progress, value)
+          loader.style.setProperty('--loader-progress', progress.toFixed(3))
+        }
+        const ticker = window.setInterval(() => setProgress(progress + (0.85 - progress) * 0.12), 160)
+
+        let finished = false
+        const finish = () => {
+          if (finished) return
+          finished = true
+          window.clearInterval(ticker)
+          setProgress(1)
+          const wait = Math.max(0, MIN_MS - (performance.now() - startedAt))
+          window.setTimeout(() => {
+            // Salto para a velocidade da luz e a página aparece.
+            targetSpeed = 22
+            root.classList.add('is-launching')
+            root.classList.remove('is-loading')
+            window.dispatchEvent(new Event('zeroone:loaded'))
+            window.setTimeout(() => {
+              running = false
+              window.removeEventListener('resize', resize)
+              root.classList.remove('is-launching')
+              loader.remove()
+            }, 700)
+          }, wait + 120)
+        }
+
+        const fontsReady = document.fonts ? document.fonts.ready : Promise.resolve()
+        const pageLoaded = document.readyState === 'complete'
+          ? Promise.resolve()
+          : new Promise((resolve) => window.addEventListener('load', resolve, { once: true }))
+        Promise.all([fontsReady, pageLoaded]).then(finish, finish)
+        window.setTimeout(finish, 3000)
+      })()
+    </script>
+    <div class="space-parallax" aria-hidden="true"></div>
+    <div class="space-parallax-near" aria-hidden="true"></div>
+    <div class="site-shell">
+      <slot />
+    </div>
+    <script>
+      import { getReducedMotion, subscribeReducedMotion } from '../utils/motionPreference'
+
+      const root = document.documentElement
+
+      // HTML remains visible even if hydration fails. Animate only after the
+      // browser can run this script, including elements added by React later.
+      // As entradas esperam a tela de abertura sair, para não acontecerem escondidas.
+      const pageReady = root.classList.contains('is-loading')
+        ? new Promise((resolve) => window.addEventListener('zeroone:loaded', resolve, { once: true }))
+        : Promise.resolve()
+
+      window.__zeroReveal = true
+      // Guardado fora do DOM: um atributo novo antes da hidratação faria o
+      // React reclamar de HTML diferente.
+      const revealed = new WeakSet()
+
+      // O CSS esconde os blocos ainda não revelados; a animação (com fill)
+      // os traz de volta e os mantém visíveis.
+      const reveal = async (item) => {
+        if (revealed.has(item)) return
+        revealed.add(item)
+        await pageReady
+        if (!root.classList.contains('reveal-ready') || typeof item.animate !== 'function') return
+
+        const delay = Math.max(0, Number(item.dataset.revealDelay) || 0) * 1000
+        item.animate([
+          { opacity: 0, transform: 'translate3d(0, 16px, 0)' },
+          { opacity: 1, transform: 'translate3d(0, 0, 0)' },
+        ], {
+          duration: 700,
+          delay,
+          easing: 'cubic-bezier(0.22, 1, 0.36, 1)',
+          fill: 'both',
+        })
+      }
+
+      const revealObserver = 'IntersectionObserver' in window
+        ? new IntersectionObserver((entries, observer) => {
+          entries.forEach((entry) => {
+            if (!entry.isIntersecting) return
+            observer.unobserve(entry.target)
+            reveal(entry.target)
+          })
+          // Começa um pouco antes do bloco entrar na tela, para ele chegar já
+          // aparecendo em vez de surgir depois que a rolagem para.
+        }, { rootMargin: '0px 0px 12% 0px', threshold: 0 })
+        : null
+
+      const watchReveal = (item) => {
+        if (revealed.has(item)) return
+        if (revealObserver && !getReducedMotion()) revealObserver.observe(item)
+        else reveal(item)
+      }
+
+      document.querySelectorAll('[data-reveal]').forEach(watchReveal)
+      if (revealObserver) {
+        new MutationObserver((mutations) => {
+          mutations.forEach(({ addedNodes }) => {
+            addedNodes.forEach((node) => {
+              if (!(node instanceof Element)) return
+              if (node.matches('[data-reveal]')) watchReveal(node)
+              node.querySelectorAll('[data-reveal]').forEach(watchReveal)
+            })
+          })
+        }).observe(document.body, { childList: true, subtree: true })
+      }
+
+      let frame = 0
+      const updateSpaceDrift = () => {
+        frame = 0
+        const scroll = getReducedMotion() ? 0 : Math.min(window.scrollY, window.innerHeight)
+        const journey = Math.min(1, scroll / Math.max(window.innerHeight * 0.86, 1))
+        root.style.setProperty('--journey-progress', journey.toFixed(3))
+        root.style.setProperty('--space-parallax-y', `${-scroll * 0.1}px`)
+        root.style.setProperty('--space-near-y', `${-scroll * 0.24}px`)
+        root.style.setProperty('--portal-drift', `${-journey * 78}px`)
+        root.style.setProperty('--portal-scale', String(1 + journey * 0.24))
+      }
+      window.addEventListener('scroll', () => {
+        if (!frame) frame = window.requestAnimationFrame(updateSpaceDrift)
+      }, { passive: true })
+      window.addEventListener('resize', updateSpaceDrift)
+      subscribeReducedMotion(() => {
+        root.dataset.motion = getReducedMotion() ? 'reduced' : 'full'
+        // Desligar o movimento mostra na hora o que ainda estava escondido.
+        if (getReducedMotion()) root.classList.remove('reveal-ready')
+        updateSpaceDrift()
+      })
+      updateSpaceDrift()
+    </script>
+  </body>
+</html>

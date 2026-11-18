@@ -1,0 +1,17 @@
+server {
+    listen 80;
+    listen [::]:80;
+    server_name ~^(?<portfolio_name>bruni|daniela|elisabete|pervoi)\.nexiu\.dev$;
+
+    root /var/www/nexiu/portfolio-sites/$portfolio_name/current;
+    index index.html;
+
+    location ^~ /.well-known/acme-challenge/ {
+        root /var/www/letsencrypt;
+        try_files $uri =404;
+    }
+
+    location / {
+        try_files $uri $uri/ =404;
+    }
+}

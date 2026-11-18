@@ -1,0 +1,177 @@
+.overlay {
+  position: fixed;
+  inset: 0;
+  z-index: var(--z-modal);
+  display: grid;
+  place-items: center;
+  padding: var(--space-4);
+  background-color: var(--overlay);
+  -webkit-backdrop-filter: blur(4px);
+  backdrop-filter: blur(4px);
+}
+
+.dialog {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  /* Em janelas baixas o diálogo estreita, para a imagem 16:10 não ocupar a
+     altura toda e empurrar o texto para fora da área visível. */
+  max-width: min(44rem, max(22rem, calc((100vh - 28rem) * 1.6)));
+  max-width: min(44rem, max(22rem, calc((100dvh - 28rem) * 1.6)));
+  max-height: calc(100vh - 2 * var(--space-4));
+  max-height: calc(100dvh - 2 * var(--space-4));
+  overflow: hidden;
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-lg);
+  background-color: var(--surface);
+  box-shadow: var(--shadow-modal);
+}
+
+.dialog:focus {
+  outline: none;
+}
+
+/* Fica fora da área de rolagem para continuar visível com conteúdo longo. */
+.close {
+  position: absolute;
+  top: var(--space-3);
+  right: var(--space-3);
+  z-index: 1;
+  display: grid;
+  place-items: center;
+  width: 2.75rem;
+  height: 2.75rem;
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-pill);
+  background-color: var(--bg);
+  color: var(--text);
+  transition:
+    background-color var(--duration) var(--ease),
+    border-color var(--duration) var(--ease);
+}
+
+.close:hover {
+  border-color: var(--blue);
+  background-color: var(--surface-hover);
+}
+
+.close svg {
+  width: 1.25rem;
+  height: 1.25rem;
+}
+
+.scroller {
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  scrollbar-color: var(--border-strong) transparent;
+  scrollbar-width: thin;
+}
+
+.media {
+  background-color: var(--bg-elevated);
+}
+
+.body {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  padding: var(--space-5);
+  border-top: 1px solid var(--border);
+}
+
+.meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-3);
+  color: var(--text-muted);
+  font-size: var(--fs-sm);
+  font-variant-numeric: tabular-nums;
+}
+
+.title {
+  font-size: var(--fs-xl);
+  overflow-wrap: anywhere;
+}
+
+.description {
+  color: var(--text-muted);
+  font-size: var(--fs-md);
+}
+
+/* Estudo de caso: etapas ligadas por uma linha vertical em degradê. */
+.caseStudy {
+  display: grid;
+  gap: var(--space-4);
+  margin: 0;
+  padding-left: var(--space-4);
+  border-left: 2px solid transparent;
+  border-image: var(--gradient-accent) 1;
+}
+
+.caseStep {
+  display: grid;
+  gap: var(--space-1);
+}
+
+.caseLabel {
+  color: var(--blue-light);
+  font-size: var(--fs-xs);
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.caseText {
+  margin: 0;
+  color: var(--text-muted);
+}
+
+.tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+  padding-top: var(--space-2);
+}
+
+@media (min-width: 40rem) {
+  .overlay {
+    padding: var(--space-6);
+  }
+
+  .dialog {
+    max-height: calc(100vh - 2 * var(--space-6));
+    max-height: calc(100dvh - 2 * var(--space-6));
+  }
+
+  .body {
+    padding: var(--space-6);
+  }
+}
+
+/* Telas largas: imagem e texto lado a lado, para caber em janelas baixas. */
+@media (min-width: 60rem) {
+  .dialog {
+    max-width: 60rem;
+  }
+
+  .scroller {
+    display: grid;
+    grid-template-columns: minmax(0, 6fr) minmax(0, 5fr);
+  }
+
+  .body {
+    justify-content: center;
+    /* O espaço extra no topo evita que o texto passe sob o botão de fechar. */
+    padding-top: calc(2.75rem + var(--space-5));
+    border-top: 0;
+    border-left: 1px solid var(--border);
+  }
+}
