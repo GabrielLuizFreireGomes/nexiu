@@ -48,3 +48,11 @@
 - Gabriel confirmou que é o responsável pelo atendimento e autorizou a troca das referências ao Marcos.
 - WhatsApp confirmado: +55 12 99781-6761 (5512997816761). Troca na home, páginas de serviço, mensagem inicial, dados estruturados e llms.txt.
 - Ajuste pontual: preservar direção visual, serviços e portfólio. Verificar build e todos os destinos de WhatsApp antes e depois de publicar. Release anterior preservada para reversão.
+
+
+## Portfólio ZeroOne — 18/11/2026
+
+- Gabriel confirmou que https://zerone.dev.br também é seu e autorizou incluí-lo no portfólio e adicionar crédito de autoria NexIU no site ZeroOne.
+- Adicionado card ZeroOne Developers, identificado como projeto próprio de tecnologia, com captura real da primeira tela e link para o domínio publicado. Introdução do portfólio ajustada para incluir tecnologia.
+- Rodapé da ZeroOne recebe link visível Desenvolvido pela NexIU para https://nexiu.dev/. Sem promessa de ganho de posição; sem alteração dos contatos da ZeroOne.
+- Validar ambos os builds, lint da ZeroOne, imagens, navegação e apresentação móvel/desktop. Publicar em releases separadas, preservando as versões anteriores.

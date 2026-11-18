@@ -13,6 +13,13 @@ export const nav = [
 
 export const portfolio = [
   {
+    name: 'ZeroOne Developers',
+    category: 'Projeto próprio · Tecnologia',
+    description: 'Site institucional com apresentação de serviços, projetos publicados e contato para um estúdio de desenvolvimento.',
+    image: '/portfolio/zerone-20261118.png',
+    url: 'https://zerone.dev.br/',
+  },
+  {
     name: 'Bruni Estética Automotiva',
     category: 'Estética automotiva',
     description: 'Serviços, trabalhos e contato direto em uma página para quem cuida do carro.',
